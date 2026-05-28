@@ -1,4 +1,5 @@
 import { MessageBubble } from './MessageBubble';
+import { Spinner } from '../ui/Spinner';
 import styles from './MessageList.module.css';
 
 export function MessageList() {
@@ -17,6 +18,15 @@ export function MessageList() {
     },
   ];
   const author = 'John Doe';
+  const loading = true;
+  
+  if (loading) {
+    return (
+      <div className={styles.centered}>
+        <Spinner size="lg" label="Loading messages…" />
+      </div>
+    );
+  }
 
   return (
     <div
