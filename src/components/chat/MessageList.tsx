@@ -1,25 +1,26 @@
+import { useEffect } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { messagesAtom, loadingAtom, errorAtom, authorAtom, fetchMessagesAtom, clearErrorAtom } from '../../atoms/chatAtoms';
+import { POLL_INTERVAL_MS } from '../../lib/constants';
 import { MessageBubble } from './MessageBubble';
 import { Spinner } from '../ui/Spinner';
 import styles from './MessageList.module.css';
 
 export function MessageList() {
-  const messages = [
-    {
-      "_id": "01a89d92-d58c-434d-956e-202cc927ad3e",
-      "message": "Hey there!",
-      "author": "John Doe",
-      "createdAt": "2026-05-28T05:00:08.580Z"
-    },
-    {
-      "_id": "01a89d92-d58c-434d-956e-202cc927ad3e",
-      "message": "How are you?",
-      "author": "Jane Doe",
-      "createdAt": "2026-05-28T05:01:08.580Z"
-    },
-  ];
-  const author = 'John Doe';
-  const loading = true;
-  
+  const messages = useAtomValue(messagesAtom);
+  const loading = useAtomValue(loadingAtom);
+  const error = useAtomValue(errorAtom);
+  const author = useAtomValue(authorAtom);
+  const fetchMessages = useSetAtom(fetchMessagesAtom);
+  const clearError = useSetAtom(clearErrorAtom);
+
+
+  useEffect(() => {
+    fetchMessages();
+    const id = setInterval(fetchMessages, POLL_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [fetchMessages]);
+
   if (loading) {
     return (
       <div className={styles.centered}>
@@ -32,6 +33,15 @@ export function MessageList() {
     <div
       className={styles.container}
     >
+      {error && (
+        <div className={styles.errorBanner} role="alert">
+          <span>{error}</span>
+          <button onClick={clearError} className={styles.errorClose} aria-label="Dismiss error">
+            ✕
+          </button>
+        </div>
+      )}
+
       {messages.length === 0 ? (
         <div className={styles.empty}>
           No messages yet. Say hello!

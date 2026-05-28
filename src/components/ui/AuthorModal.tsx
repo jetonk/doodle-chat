@@ -1,12 +1,19 @@
 import { type SubmitEvent, useState } from 'react';
+import { useAtom } from 'jotai';
+import { authorAtom } from '../../atoms/chatAtoms';
 import styles from './AuthorModal.module.css';
 
 export function AuthorModal() {
-  const [author, setAuthor] = useState<string>('');
+  const [author, setAuthor] = useAtom(authorAtom);
+  const [draft, setDraft] = useState('');
+
+
+  if (author) return null;
 
   function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
-    console.log('draft message', author);
+    const name = draft.trim();
+    if (name) setAuthor(name);
   }
 
   return (
@@ -22,8 +29,8 @@ export function AuthorModal() {
           <input
             id="author-input"
             type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
             placeholder="e.g. Jane Smith"
             className={styles.input}
             maxLength={50}
@@ -31,7 +38,7 @@ export function AuthorModal() {
           />
           <button
             type="submit"
-            disabled={!author.trim()}
+            disabled={!draft.trim()}
             className={styles.button}
           >
             Start chatting
