@@ -59,6 +59,13 @@
   text-align: right;
 }
 
+.failed {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f07060;
+}
+
 @media (max-width: 480px) {
   .card {
     max-width: calc(100vw - 48px);

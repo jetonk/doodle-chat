@@ -19,8 +19,6 @@ export async function getMessages(after?: string, limit = 50): Promise<Message[]
 }
 
 export async function postMessage(author: string, message: string): Promise<Message> {
-  console.log('author', author);
-  console.log('message', message);
   const res = await fetch(`${API_BASE_URL}/api/v1/messages`, {
     method: 'POST',
     headers: baseHeaders,

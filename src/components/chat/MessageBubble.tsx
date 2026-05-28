@@ -1,11 +1,14 @@
 import { memo } from 'react';
+import { RetryIcon } from '../ui/Retry';
+import { useSetAtom } from 'jotai';
+import { sendMessageAtom } from '../../atoms/chatAtoms';
 import type { Message } from '../../types/message';
 import styles from './MessageBubble.module.css';
-
 interface MessageBubbleProps {
   message: Message;
   isOwn: boolean;
 }
+
 
 function formatDateTime(iso: string): string {
   const date = new Date(iso);
@@ -14,7 +17,14 @@ function formatDateTime(iso: string): string {
   return `${dateStr} ${timeStr}`;
 }
 
+
 export const MessageBubble = memo(function MessageBubble({ message, isOwn }: MessageBubbleProps) {
+  const sendMessage = useSetAtom(sendMessageAtom);
+  
+  const handleRetry = () => {
+    sendMessage({ author: message.author, message: message.message, retryId: message._id });
+  };
+  
   return (
     <li className={`${styles.item} ${isOwn ? styles.own : styles.other}`}>
       <div className={`${styles.card} ${isOwn ? styles.cardOwn : styles.cardOther}`}>
@@ -30,6 +40,11 @@ export const MessageBubble = memo(function MessageBubble({ message, isOwn }: Mes
           {formatDateTime(message.createdAt)}
         </time>
       </div>
+      {message.failed && (
+        <button className={styles.failed} title="Failed to send" onClick={handleRetry}>
+          <RetryIcon />
+        </button>
+      )}
     </li>
   );
 });
