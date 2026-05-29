@@ -64,15 +64,16 @@ export function MessageInput() {
         maxLength={MAX_LENGTH}
         disabled={sending}
         aria-disabled={sending}
+        autoFocus
       />
 
       <button
         type="submit"
         disabled={!canSend}
         className={styles.sendButton}
-        aria-label={sending ? 'Sending…' : 'Send message'}
+        aria-label={sending ? 'Sending' : 'Send message'}
       >
-        {sending ? <Spinner size="sm" label="Sending…" /> : 'Send'}
+        {sending ? <Spinner size="sm" label="Sending" /> : 'Send'}
       </button>
     </form>
   );

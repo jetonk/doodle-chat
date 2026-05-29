@@ -7,7 +7,7 @@ import styles from './App.module.css';
 
 export default function App() {
   const author = useAtomValue(authorAtom);
-
+  
   return (
     <>
       <AuthorModal />
