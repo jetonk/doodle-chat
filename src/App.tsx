@@ -12,7 +12,11 @@ export default function App() {
     <>
       <AuthorModal />
 
-      <div className={styles.layout}>
+      <div
+        className={styles.layout}
+        aria-hidden={!author || undefined}
+        inert={!author || undefined}
+      >
         <main className={styles.main}>
           <MessageList />
           {author && <MessageInput />}

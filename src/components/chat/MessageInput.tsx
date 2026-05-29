@@ -1,4 +1,4 @@
-import { useState, useRef, type SubmitEvent, type KeyboardEvent, type ChangeEvent } from 'react';
+import { useState, useRef, type KeyboardEvent, type ChangeEvent, type FormEvent } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { authorAtom, sendingAtom, sendMessageAtom } from '../../atoms/chatAtoms';
 import { Spinner } from '../ui/Spinner';
@@ -14,9 +14,9 @@ export function MessageInput() {
   const [text, setText] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const canSend = text.trim().length > 0 && !sending || text.trim().length > MAX_LENGTH;
+  const canSend = text.trim().length > 0 && !sending;
 
-  async function handleSubmit(e?: SubmitEvent) {
+  async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
     e?.preventDefault();
     if (!canSend) return;
 
@@ -71,10 +71,14 @@ export function MessageInput() {
         type="submit"
         disabled={!canSend}
         className={styles.sendButton}
-        aria-label={sending ? 'Sending' : 'Send message'}
+        aria-label="Send message"
       >
-        {sending ? <Spinner size="sm" label="Sending" /> : 'Send'}
+        {sending ? <Spinner size="sm" aria-hidden /> : 'Send'}
       </button>
+
+      <span role="status" className={styles.srOnly}>
+        {sending ? 'Sending message' : ''}
+      </span>
     </form>
   );
 }

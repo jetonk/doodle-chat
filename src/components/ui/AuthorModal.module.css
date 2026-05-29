@@ -60,9 +60,9 @@
 
 .button {
   padding: 0.7rem;
-  background: #f07060;
+  background: #c0392b;
   color: #fff;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
@@ -71,10 +71,15 @@
 }
 
 .button:hover:not(:disabled) {
-  background: #e05a4a;
+  background: #a93226;
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1f2937;
 }
 
 .button:disabled {
-  opacity: 0.45;
+  opacity: 0.5;
   cursor: not-allowed;
 }

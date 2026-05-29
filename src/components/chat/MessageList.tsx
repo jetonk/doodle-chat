@@ -13,7 +13,7 @@ export function MessageList() {
   const loading = useAtomValue(loadingAtom);
   const error = useAtomValue(errorAtom);
   const author = useAtomValue(authorAtom);
-  
+
   const fetchMessages = useSetAtom(fetchMessagesAtom);
   const clearError = useSetAtom(clearErrorAtom);
 
@@ -52,6 +52,8 @@ export function MessageList() {
       ref={containerRef}
       className={styles.container}
       onScroll={handleScroll}
+      tabIndex={0}
+      aria-label="Message history"
     >
       {error && (
         <div className={styles.errorBanner} role="alert">
@@ -63,25 +65,21 @@ export function MessageList() {
       )}
 
       {messages.length === 0 ? (
-        <div className={styles.empty}>
+        <p role="status" className={styles.empty}>
           No messages yet. Say hello!
-        </div>
+        </p>
       ) : (
-        <ol
-          className={styles.list}
-          role="log"
-          aria-live="polite"
-          aria-label="Chat messages"
-          aria-relevant="additions"
-        >
-          {messages.map((msg) => (
-            <MessageBubble
-              key={msg._id}
-              message={msg}
-              isOwn={msg.author === author}
-            />
-          ))}
-        </ol>
+        <div role="log" aria-label="Chat messages" aria-relevant="additions" aria-live="polite">
+          <ol className={styles.list}>
+            {messages.map((msg) => (
+              <MessageBubble
+                key={msg._id}
+                message={msg}
+                isOwn={msg.author === author}
+              />
+            ))}
+          </ol>
+        </div>
       )}
 
       <div ref={bottomRef} aria-hidden="true" />

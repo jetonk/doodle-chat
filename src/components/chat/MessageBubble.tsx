@@ -41,8 +41,12 @@ export const MessageBubble = memo(function MessageBubble({ message, isOwn }: Mes
         </time>
       </div>
       {message.failed && (
-        <button className={styles.failed} title="Failed to send" onClick={handleRetry}>
-          <RetryIcon />
+        <button
+          className={styles.failed}
+          aria-label="Failed to send — click to retry"
+          onClick={handleRetry}
+        >
+          <RetryIcon aria-hidden />
         </button>
       )}
     </li>

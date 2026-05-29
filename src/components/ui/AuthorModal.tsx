@@ -17,10 +17,10 @@ export function AuthorModal() {
   }
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-subtitle">
       <div className={styles.card}>
         <h1 id="modal-title" className={styles.title}>Welcome to Doodle Chat</h1>
-        <p className={styles.subtitle}>Choose a name to start chatting</p>
+        <p id="modal-subtitle" className={styles.subtitle}>Choose a name to start chatting</p>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <label htmlFor="author-input" className={styles.label}>
@@ -35,6 +35,7 @@ export function AuthorModal() {
             className={styles.input}
             maxLength={50}
             autoComplete="name"
+            autoFocus
           />
           <button
             type="submit"

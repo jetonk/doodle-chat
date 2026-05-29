@@ -22,7 +22,7 @@
 .textarea {
   flex: 1;
   resize: none;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 4px;
   padding: 10px 14px;
   font-size: 1rem;
@@ -36,20 +36,21 @@
 }
 
 .textarea::placeholder {
-  color: #9ca3af;
+  color: #6b7280;
 }
 
-.textarea:focus {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+.textarea:focus-visible {
+  border-color: #1f2937;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1f2937;
 }
 
 .sendButton {
   flex-shrink: 0;
   height: 42px;
   padding: 0 20px;
-  background: #f07060;
+  background: #c0392b;
   color: #fff;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 600;
@@ -63,14 +64,19 @@
 }
 
 .sendButton:hover:not(:disabled) {
-  background: #e05a4a;
+  background: #a93226;
 }
 
 .sendButton:active:not(:disabled) {
-  background: #c84a3a;
+  background: #922b21;
+}
+
+.sendButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1f2937;
 }
 
 .sendButton:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
