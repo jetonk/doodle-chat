@@ -1,6 +1,6 @@
 import { type SubmitEvent, useState } from 'react';
 import { useAtom } from 'jotai';
-import { authorAtom } from '../../atoms/chatAtoms';
+import { authorAtom } from '../../atoms/authAtoms';
 import styles from './AuthorModal.module.css';
 
 export function AuthorModal() {

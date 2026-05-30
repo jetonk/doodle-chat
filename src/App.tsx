@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { authorAtom } from './atoms/chatAtoms';
+import { authorAtom } from './atoms/authAtoms';
 import { AuthorModal } from './components/ui/AuthorModal';
 import { MessageList } from './components/chat/MessageList';
 import { MessageInput } from './components/chat/MessageInput';

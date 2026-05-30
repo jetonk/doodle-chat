@@ -6,9 +6,16 @@ const baseHeaders = {
   'Content-Type': 'application/json',
 };
 
-export async function getMessages(after?: string, limit = 50): Promise<Message[]> {
+export interface GetMessagesParams {
+  after?: string;
+  before?: string;
+  limit?: number;
+}
+
+export async function getMessages({ after, before, limit = 50 }: GetMessagesParams = {}): Promise<Message[]> {
   const params = new URLSearchParams({ limit: String(limit) });
   if (after) params.set('after', after);
+  if (before) params.set('before', before);
 
   const res = await fetch(`${API_BASE_URL}/api/v1/messages?${params}`, {
     headers: baseHeaders,

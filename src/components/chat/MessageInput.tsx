@@ -1,6 +1,7 @@
 import { useState, useRef, type KeyboardEvent, type ChangeEvent, type FormEvent } from 'react';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { authorAtom, sendingAtom, sendMessageAtom } from '../../atoms/chatAtoms';
+import { useAtomValue } from 'jotai';
+import { authorAtom } from '../../atoms/authAtoms';
+import { sendingAtom, sendMessage } from '../../atoms/chatAtoms';
 import { Spinner } from '../ui/Spinner';
 import styles from './MessageInput.module.css';
 
@@ -9,8 +10,6 @@ const MAX_LENGTH = 500;
 export function MessageInput() {
   const author = useAtomValue(authorAtom);
   const sending = useAtomValue(sendingAtom);
-  const sendMessage = useSetAtom(sendMessageAtom);
-
   const [text, setText] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 

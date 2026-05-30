@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { RetryIcon } from '../ui/Retry';
-import { useSetAtom } from 'jotai';
-import { sendMessageAtom } from '../../atoms/chatAtoms';
+import { sendMessage } from '../../atoms/chatAtoms';
 import type { Message } from '../../types/message';
 import styles from './MessageBubble.module.css';
 interface MessageBubbleProps {
@@ -19,8 +18,6 @@ function formatDateTime(iso: string): string {
 
 
 export const MessageBubble = memo(function MessageBubble({ message, isOwn }: MessageBubbleProps) {
-  const sendMessage = useSetAtom(sendMessageAtom);
-  
   const handleRetry = () => {
     sendMessage({ author: message.author, message: message.message, retryId: message._id });
   };

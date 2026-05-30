@@ -1,48 +1,57 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { messagesAtom, loadingAtom, errorAtom, authorAtom, fetchMessagesAtom, clearErrorAtom } from '../../atoms/chatAtoms';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useAtomValue } from 'jotai';
+import { authorAtom } from '../../atoms/authAtoms';
+import { useChatState, fetchMessages, clearError, loadEarlier } from '../../atoms/chatAtoms';
 import { POLL_INTERVAL_MS } from '../../lib/constants';
 import { MessageBubble } from './MessageBubble';
-import { Spinner } from '../ui/Spinner';
 import styles from './MessageList.module.css';
 
 const SCROLL_THRESHOLD_PX = 120;
 
 export function MessageList() {
-  const messages = useAtomValue(messagesAtom);
-  const loading = useAtomValue(loadingAtom);
-  const error = useAtomValue(errorAtom);
+  const { messages, loading, error, hasMore, loadingEarlier } = useChatState();
   const author = useAtomValue(authorAtom);
-
-  const fetchMessages = useSetAtom(fetchMessagesAtom);
-  const clearError = useSetAtom(clearErrorAtom);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const isNearBottom = useRef(true);
+  const prevScrollHeightRef = useRef<number | null>(null);
 
-  const handleScroll = useCallback(() => {
+  const handleScroll = () => {
     const el = containerRef.current;
     if (!el) return;
     isNearBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < SCROLL_THRESHOLD_PX;
-  }, []);
+  };
 
   useEffect(() => {
     fetchMessages();
     const id = setInterval(fetchMessages, POLL_INTERVAL_MS);
     return () => clearInterval(id);
-  }, [fetchMessages]);
+  }, []);
 
-  useEffect(() => {
+
+  useLayoutEffect(() => {
+    const el = containerRef.current;
+    if (el && prevScrollHeightRef.current !== null) {
+      el.scrollTop += el.scrollHeight - prevScrollHeightRef.current;
+      prevScrollHeightRef.current = null;
+      return;
+    }
     if (isNearBottom.current) {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
 
+  const handleLoadEarlier = () => {
+    if (loadingEarlier) return;
+    prevScrollHeightRef.current = containerRef.current?.scrollHeight ?? null;
+    loadEarlier();
+  };
+
   if (loading) {
     return (
       <div className={styles.centered}>
-        <Spinner size="lg" label="Loading messages…" />
+        <div className={styles.spinner} role="status" aria-label="Loading messages..." />
       </div>
     );
   }
@@ -58,8 +67,22 @@ export function MessageList() {
       {error && (
         <div className={styles.errorBanner} role="alert">
           <span>{error}</span>
-          <button onClick={clearError} className={styles.errorClose} aria-label="Dismiss error">
+          <button onClick={() => clearError()} className={styles.errorClose} aria-label="Dismiss error">
             ✕
+          </button>
+        </div>
+      )}
+
+      {hasMore && messages.length > 0 && (
+        <div className={styles.loadEarlier}>
+          <button
+            className={styles.loadEarlierButton}
+            onClick={handleLoadEarlier}
+            disabled={loadingEarlier}
+            aria-busy={loadingEarlier}
+            aria-label="Load earlier messages"
+          >
+            {loadingEarlier ? 'Loading…' : 'Load earlier messages'}
           </button>
         </div>
       )}

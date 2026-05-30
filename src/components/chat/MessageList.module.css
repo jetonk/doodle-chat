@@ -1,9 +1,47 @@
 .container {
   flex: 1;
   overflow-y: auto;
-  padding: 24px 24px 12px;
+  padding: 16px 0px 16px;
   display: flex;
   flex-direction: column;
+}
+
+.loadEarlier {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 12px;
+  flex-shrink: 0;
+}
+
+.loadEarlierButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid #d1d5db;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  backdrop-filter: blur(4px);
+}
+
+.loadEarlierButton:hover:not(:disabled) {
+  background: #fff;
+  border-color: #9ca3af;
+}
+
+.loadEarlierButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #374151;
+}
+
+.loadEarlierButton:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 .centered {
