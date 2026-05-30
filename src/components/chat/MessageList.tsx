@@ -1,9 +1,9 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
-import { authorAtom } from '../../atoms/authAtoms';
-import { useChatState, fetchMessages, clearError, loadEarlier } from '../../atoms/chatAtoms';
-import { POLL_INTERVAL_MS } from '../../lib/constants';
-import { MessageBubble } from './MessageBubble';
+import { authorAtom } from '@atoms/authAtoms';
+import { useChatState, fetchMessages, clearError, loadEarlier } from '@atoms/chatAtoms';
+import { POLL_INTERVAL_MS } from '@lib/constants';
+import { MessageBubble } from '@components/chat/MessageBubble';
 import styles from './MessageList.module.css';
 
 const SCROLL_THRESHOLD_PX = 120;

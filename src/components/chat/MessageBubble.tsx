@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { RetryIcon } from '../ui/Retry';
-import { sendMessage } from '../../atoms/chatAtoms';
+import { RetryIcon } from '@components/ui/Retry';
+import { sendMessage } from '@atoms/chatAtoms';
 import type { Message } from '../../types/message';
 import styles from './MessageBubble.module.css';
 interface MessageBubbleProps {

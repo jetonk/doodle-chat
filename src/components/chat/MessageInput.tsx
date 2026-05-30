@@ -1,8 +1,8 @@
 import { useState, useRef, type KeyboardEvent, type ChangeEvent, type FormEvent } from 'react';
 import { useAtomValue } from 'jotai';
-import { authorAtom } from '../../atoms/authAtoms';
-import { sendingAtom, sendMessage } from '../../atoms/chatAtoms';
-import { Spinner } from '../ui/Spinner';
+import { authorAtom } from '@atoms/authAtoms';
+import { sendingAtom, sendMessage } from '@atoms/chatAtoms';
+import { Spinner } from '@components/ui/Spinner';
 import styles from './MessageInput.module.css';
 
 const MAX_LENGTH = 500;

@@ -1,6 +1,6 @@
 import { atom, useAtomValue } from 'jotai';
 import type { Message, SendPayload } from '../types/message';
-import { getMessages, postMessage } from '../lib/api';
+import { getMessages, postMessage } from '@lib/api';
 import { store as defaultStore } from './store';
 import type { AppStore } from './store';
 
