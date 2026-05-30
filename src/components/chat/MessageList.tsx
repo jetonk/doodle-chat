@@ -4,6 +4,7 @@ import { authorAtom } from '@atoms/authAtoms';
 import { useChatState, fetchMessages, clearError, loadEarlier } from '@atoms/chatAtoms';
 import { POLL_INTERVAL_MS } from '@lib/constants';
 import { MessageBubble } from '@components/chat/MessageBubble';
+import { Spinner } from '@components/ui/Spinner';
 import styles from './MessageList.module.css';
 
 const SCROLL_THRESHOLD_PX = 120;
@@ -51,7 +52,7 @@ export function MessageList() {
   if (loading) {
     return (
       <div className={styles.centered}>
-        <div className={styles.spinner} role="status" aria-label="Loading messages..." />
+        <Spinner size="md" />
       </div>
     );
   }
