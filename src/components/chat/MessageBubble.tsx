@@ -12,8 +12,12 @@ interface MessageBubbleProps {
 function formatDateTime(iso: string): string {
   const date = new Date(iso);
   const dateStr = date.toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' });
-  const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
   return `${dateStr} ${timeStr}`;
+}
+
+function isUrl(str: string): boolean {
+  return str.startsWith('http://') || str.startsWith('https://') || str.startsWith('www.');
 }
 
 
@@ -28,7 +32,20 @@ export const MessageBubble = memo(function MessageBubble({ message, isOwn }: Mes
         {!isOwn && (
           <span className={styles.author}>{message.author}</span>
         )}
-        <p className={styles.text}>{message.message}</p>
+        <p className={styles.text}>
+          {isUrl(message.message) ? (
+            <a
+              href={message.message.startsWith('http') ? message.message : `https://${message.message}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}
+            >
+              {message.message}
+            </a>
+          ) : (
+            message.message
+          )}
+        </p>
         <time
           className={`${styles.time} ${isOwn ? styles.timeOwn : ''}`}
           dateTime={message.createdAt}
