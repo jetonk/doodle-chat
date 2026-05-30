@@ -20,6 +20,23 @@ function isUrl(str: string): boolean {
   return str.startsWith('http://') || str.startsWith('https://') || str.startsWith('www.');
 }
 
+function checkMessageForUrls(message: string) {
+    if (isUrl(message)) {
+      const href = message.startsWith('http') ? message : `https://${message}`;
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}
+        >
+          {message}
+        </a>
+      );
+    }
+    return message;
+}
+
 
 export const MessageBubble = memo(function MessageBubble({ message, isOwn }: MessageBubbleProps) {
   const handleRetry = () => {
@@ -32,20 +49,7 @@ export const MessageBubble = memo(function MessageBubble({ message, isOwn }: Mes
         {!isOwn && (
           <span className={styles.author}>{message.author}</span>
         )}
-        <p className={styles.text}>
-          {isUrl(message.message) ? (
-            <a
-              href={message.message.startsWith('http') ? message.message : `https://${message.message}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}
-            >
-              {message.message}
-            </a>
-          ) : (
-            message.message
-          )}
-        </p>
+        <p className={styles.text}>{checkMessageForUrls(message.message)}</p>
         <time
           className={`${styles.time} ${isOwn ? styles.timeOwn : ''}`}
           dateTime={message.createdAt}
