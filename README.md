@@ -66,3 +66,22 @@ src/
 npm run build
 npm run preview
 ```
+
+## Testing
+
+Run the test suite with [Vitest](https://vitest.dev/):
+
+```bash
+# Run tests once
+npm test
+
+# Watch mode — re-run on file changes
+npm run test:watch
+```
+
+**Test Coverage:**
+- **Atoms** (`src/atoms/chatAtoms.test.ts`) — State management, message deduplication, polling logic
+- **Components** - MessageBubble, MessageInput, AuthorModal, MessageList
+- **34 total tests** across 5 test files
+
+Tests use `@testing-library/react` for component testing and Jotai's `createStore` for isolated atom testing.
