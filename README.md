@@ -57,8 +57,8 @@ src/
 - Own messages shown on the right, others on the left
 - Author name persisted in `localStorage`, clear chat-author value from localStorage set a new author to switch author
 - Accessible: `role="log"`, `aria-live`, keyboard navigation, WCAG AA contrast
-- Responsive — works on 320px mobile up to desktop
-- Respects `prefers-reduced-motion`
+- Failed send messages are kept in the list with a retry button to resend
+- Responsive works on 320px mobile up to desktop
 
 ## Build
 
